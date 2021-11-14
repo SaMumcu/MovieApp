@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <import type="com.samumcu.movieapp.utils.UIUtils" />
+        <variable
+            name="movieDetail"
+            type="com.samumcu.movieapp.data.retrofit.response.MovieDetailsResponse" />
+    </data>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:context=".presentation.moviedetail.MovieDetailFragment">
+
+            <ImageView
+                android:id="@+id/image"
+                android:layout_width="match_parent"
+                android:layout_height="256dp"
+                android:scaleType="fitXY"
+                app:imageUrl="@{movieDetail.backdropPath}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:srcCompat="@tools:sample/avatars" />
+
+            <ImageView
+                android:id="@+id/imdbIc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="8dp"
+                android:src="@drawable/ic_imdb"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/image" />
+
+            <ImageView
+                android:id="@+id/starIc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="24dp"
+                android:layout_marginRight="8dp"
+                android:src="@drawable/ic_rate"
+                app:layout_constraintLeft_toRightOf="@id/imdbIc"
+                app:layout_constraintStart_toEndOf="@id/imdbIc"
+                app:layout_constraintTop_toBottomOf="@id/image" />
+
+            <TextView
+                android:id="@+id/ratingText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="22dp"
+                android:text="@{movieDetail.voteAverage.toString()}"
+                app:layout_constraintStart_toEndOf="@id/starIc"
+                app:layout_constraintTop_toBottomOf="@id/image" />
+
+            <TextView
+                android:id="@+id/releaseDateText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="22dp"
+                android:text="@{movieDetail.releaseDate}"
+                android:textStyle="bold"
+                app:layout_constraintStart_toEndOf="@id/ratingText"
+                app:layout_constraintTop_toBottomOf="@id/image"
+                tools:text="15.06.2021" />
+
+
+            <TextView
+                android:id="@+id/title"
+                android:textStyle="bold"
+                android:textSize="20sp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:lineSpacingExtra="4sp"
+                android:text="@{movieDetail.title}"
+                android:textColor="@color/black"
+                app:layout_constraintTop_toBottomOf="@id/imdbIc"
+                tools:text="Moonrise Kingdom (2012)" />
+
+            <TextView
+                android:id="@+id/subTitle"
+                android:textSize="15sp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:text="@{movieDetail.overview}"
+                android:textColor="@color/black"
+                app:layout_constraintTop_toBottomOf="@id/title"
+                tools:text="A pair of young lovers flee their New England town, which causes a local search party to fan out to find them." />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+
+</layout>
+
