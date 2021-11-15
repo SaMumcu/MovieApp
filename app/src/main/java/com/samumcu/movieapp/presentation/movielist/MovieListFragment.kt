@@ -48,7 +48,7 @@ class MovieListFragment : Fragment() {
         recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
                 super.onScrollStateChanged(recyclerView, newState)
-                if (!recyclerView.canScrollVertically(1)) {
+                if (!recyclerView.canScrollVertically(1) && newState==RecyclerView.SCROLL_STATE_IDLE) {
                     if (viewModel.currentPage <= viewModel.totalPages) {
                         viewModel.goToNextPage()
                         viewModel.getPageData()
@@ -56,7 +56,7 @@ class MovieListFragment : Fragment() {
                         sliderAdapter.notifyDataSetChanged()
                     }
                 }
-                else if (!recyclerView.canScrollVertically(-1)) {
+                else if (!recyclerView.canScrollVertically(-1) && newState==RecyclerView.SCROLL_STATE_IDLE) {
                     if (viewModel.currentPage > 1) {
                         viewModel.goToPreviousPage()
                         viewModel.getPageData()

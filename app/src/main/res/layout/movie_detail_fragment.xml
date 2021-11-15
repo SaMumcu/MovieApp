@@ -5,6 +5,9 @@
     <data>
         <import type="com.samumcu.movieapp.utils.UIUtils" />
         <variable
+            name="listener"
+            type="com.samumcu.movieapp.presentation.moviedetail.IntentHandler" />
+        <variable
             name="movieDetail"
             type="com.samumcu.movieapp.data.retrofit.response.MovieDetailsResponse" />
     </data>
@@ -37,6 +40,7 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="20dp"
                 android:layout_marginEnd="8dp"
+                android:onClick="@{() -> listener.onClickIMDb(movieDetail.imdbId)}"
                 android:src="@drawable/ic_imdb"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/image" />
@@ -59,7 +63,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="22dp"
-                android:text="@{movieDetail.voteAverage.toString()}"
+                android:textColor="@color/gray_dark"
+                android:text="@{UIUtils.formatRate(movieDetail.voteAverage.toString())}"
                 app:layout_constraintStart_toEndOf="@id/starIc"
                 app:layout_constraintTop_toBottomOf="@id/image" />
 
@@ -69,12 +74,12 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="22dp"
-                android:text="@{movieDetail.releaseDate}"
+                android:textColor="@color/black_text"
+                android:text='@{UIUtils.formatDate(movieDetail.releaseDate)}'
                 android:textStyle="bold"
                 app:layout_constraintStart_toEndOf="@id/ratingText"
                 app:layout_constraintTop_toBottomOf="@id/image"
                 tools:text="15.06.2021" />
-
 
             <TextView
                 android:id="@+id/title"

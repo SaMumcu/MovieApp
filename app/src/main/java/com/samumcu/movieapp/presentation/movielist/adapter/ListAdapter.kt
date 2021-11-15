@@ -52,7 +52,7 @@ class ListAdapter(
         fun bind(movie: MovieResponse) {
             title.text = movie.title
             subTitle.text = movie.overview
-            date.text = movie.releaseDate
+            date.text = movie.releaseDate?.let { UIUtils.formatDate(it) }
             Glide.with(itemView.context).load("https://image.tmdb.org/t/p/w300/"+movie.backdropPath)
                 .transition(DrawableTransitionOptions.withCrossFade()).into(imageView)
 

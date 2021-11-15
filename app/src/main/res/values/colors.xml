@@ -6,9 +6,11 @@
     <color name="teal_200">#FF03DAC5</color>
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
+    <color name="black_text">#2B2D42</color>
     <color name="white">#FFFFFFFF</color>
     <color name="gray">#FFC3C3C3</color>
     <color name="gray_text">#8D99AE</color>
+    <color name="gray_dark">#ADB5BD</color>
     <color name="gray_light">#E9ECEF</color>
     <color name="black_overlay">#66434343</color>
 </resources>

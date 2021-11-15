@@ -1,5 +1,7 @@
 package com.samumcu.movieapp.presentation.moviedetail
 
+import android.content.Intent
+import android.net.Uri
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -15,7 +17,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
 
 @AndroidEntryPoint
-class MovieDetailFragment : Fragment() {
+class MovieDetailFragment : Fragment(), IntentHandler {
 
     private lateinit var viewModel: MovieDetailViewModel
     private val args by navArgs<MovieDetailFragmentArgs>()
@@ -29,6 +31,7 @@ class MovieDetailFragment : Fragment() {
         viewModel = ViewModelProvider(this).get(MovieDetailViewModel::class.java)
         viewModel.getMovieDetailList(args.movieId)
         observeMovieDetailLiveData()
+        binding.listener = this
         return binding.root
     }
 
@@ -40,5 +43,10 @@ class MovieDetailFragment : Fragment() {
                 Timber.d(details.toString())
             }
         })
+    }
+
+    override fun onClickIMDb(path: String?) {
+        val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://www.imdb.com/title/"+path))
+        startActivity(intent)
     }
 }

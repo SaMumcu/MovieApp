@@ -6,6 +6,7 @@ import com.google.gson.annotations.SerializedName
 data class MovieDetailsResponse(
         @SerializedName("genres") val genres: List<MovieGenreResponse>?,
         @SerializedName("id") val id: Int?,
+        @SerializedName("imdb_id") val imdbId: String?,
         @SerializedName("overview") val overview: String?,
         @SerializedName("popularity") val popularity: Double?,
         @SerializedName("poster_path") val posterPath: String,
