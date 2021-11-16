@@ -31,6 +31,7 @@ class MovieDetailFragment : Fragment(), IntentHandler {
         viewModel = ViewModelProvider(this).get(MovieDetailViewModel::class.java)
         viewModel.getMovieDetailList(args.movieId)
         observeMovieDetailLiveData()
+        binding.shimmerFrameLayout.startShimmerAnimation()
         binding.listener = this
         return binding.root
     }
@@ -38,6 +39,8 @@ class MovieDetailFragment : Fragment(), IntentHandler {
     private fun observeMovieDetailLiveData() {
         viewModel.movieDetailLiveData.observe(viewLifecycleOwner, Observer {
             if (it != null) {
+                binding.shimmerFrameLayout.stopShimmerAnimation()
+                binding.shimmerFrameLayout.visibility = View.GONE
                 val details = it
                 binding.movieDetail = details
                 Timber.d(details.toString())
@@ -46,7 +49,7 @@ class MovieDetailFragment : Fragment(), IntentHandler {
     }
 
     override fun onClickIMDb(path: String?) {
-        val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://www.imdb.com/title/"+path))
+        val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://www.imdb.com/title/" + path))
         startActivity(intent)
     }
 }

@@ -12,6 +12,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.samumcu.movieapp.R
+import com.samumcu.movieapp.databinding.MovieDetailFragmentBinding
+import com.samumcu.movieapp.databinding.MovieListFragmentBinding
 import com.samumcu.movieapp.presentation.movielist.adapter.ListAdapter
 import com.samumcu.movieapp.presentation.movielist.adapter.SliderAdapter
 import dagger.hilt.android.AndroidEntryPoint
@@ -26,16 +28,19 @@ class MovieListFragment : Fragment() {
     private lateinit var viewPager2: ViewPager2
     private lateinit var recyclerView: RecyclerView
     private lateinit var layoutManager: LinearLayoutManager
+    private lateinit var binding: MovieListFragmentBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
+        binding = MovieListFragmentBinding.inflate(inflater, container, false)
         viewModel = ViewModelProvider(this).get(MovieListViewModel::class.java)
         viewModel.getPageData()
         observeMovieListLiveData()
         observeMoviePagerListLiveData()
-        return inflater.inflate(R.layout.movie_list_fragment, container, false)
+        binding.shimmerFrameLayout.startShimmerAnimation()
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -48,20 +53,23 @@ class MovieListFragment : Fragment() {
         recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
                 super.onScrollStateChanged(recyclerView, newState)
-                if (!recyclerView.canScrollVertically(1) && newState==RecyclerView.SCROLL_STATE_IDLE) {
+                if (!recyclerView.canScrollVertically(1) && newState == RecyclerView.SCROLL_STATE_IDLE) {
                     if (viewModel.currentPage <= viewModel.totalPages) {
                         viewModel.goToNextPage()
                         viewModel.getPageData()
-                        listAdapter.notifyDataSetChanged()
-                        sliderAdapter.notifyDataSetChanged()
+                        binding.movieListRV.visibility = View.GONE
+                        binding.playingMoviesViewPager.visibility = View.GONE
+                        binding.shimmerFrameLayout.visibility = View.VISIBLE
+                        binding.shimmerFrameLayout.startShimmerAnimation()
                     }
-                }
-                else if (!recyclerView.canScrollVertically(-1) && newState==RecyclerView.SCROLL_STATE_IDLE) {
+                } else if (!recyclerView.canScrollVertically(-1) && newState == RecyclerView.SCROLL_STATE_IDLE) {
                     if (viewModel.currentPage > 1) {
                         viewModel.goToPreviousPage()
                         viewModel.getPageData()
-                        listAdapter.notifyDataSetChanged()
-                        sliderAdapter.notifyDataSetChanged()
+                        binding.movieListRV.visibility = View.GONE
+                        binding.playingMoviesViewPager.visibility = View.GONE
+                        binding.shimmerFrameLayout.visibility = View.VISIBLE
+                        binding.shimmerFrameLayout.startShimmerAnimation()
                     }
                 }
             }
@@ -73,6 +81,10 @@ class MovieListFragment : Fragment() {
         viewModel.movieListDataLiveData.observe(viewLifecycleOwner, Observer {
             if (it != null) {
                 val upcoming = it.results
+                binding.shimmerFrameLayout.stopShimmerAnimation()
+                binding.shimmerFrameLayout.visibility = View.GONE
+                binding.movieListRV.visibility = View.VISIBLE
+                binding.playingMoviesViewPager.visibility = View.VISIBLE
                 listAdapter = ListAdapter(upcoming)
                 recyclerView.layoutManager = layoutManager
                 recyclerView.adapter = listAdapter

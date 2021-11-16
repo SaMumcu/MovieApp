@@ -14,7 +14,7 @@ import javax.inject.Inject
 @HiltViewModel
 class MovieDetailViewModel @Inject constructor(
     private val movieDetailUseCase: MovieDetailUseCase
-): ViewModel() {
+) : ViewModel() {
 
     private val movieDetailData = MutableLiveData<MovieDetailsResponse?>()
     val movieDetailLiveData: LiveData<MovieDetailsResponse?> get() = movieDetailData

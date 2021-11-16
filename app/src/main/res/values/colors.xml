@@ -12,5 +12,6 @@
     <color name="gray_text">#8D99AE</color>
     <color name="gray_dark">#ADB5BD</color>
     <color name="gray_light">#E9ECEF</color>
+    <color name="gray_shimmer">#DDDDDD</color>
     <color name="black_overlay">#66434343</color>
 </resources>
